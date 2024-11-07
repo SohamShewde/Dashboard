@@ -226,50 +226,32 @@ app.get('/sales/last-month', (req, res) => {
 // });
 
 
-app.get('/sales/spc-data', (req, res) => {
-  const { parameterIds } = req.query; // Expect parameterIds as a query parameter (e.g. ?parameterIds=1,2,3)
-
-  if (!parameterIds) {
-      return res.status(400).json({ error: 'Parameter IDs are required.' });
+app.get('/sales/spc-data/:parameterId', (req, res) => {
+  const parameterId = req.params.parameterId;
+  if (!parameterId) {
+    return res.status(400).json({ error: 'Parameter ID is required.' });
   }
 
-  const parameterIdArray = parameterIds.split(','); // Convert the comma-separated string to an array
-
-  // Construct SQL query
   const query = `
-      SELECT Reading, 
-             Actual_Diameter, 
-             Upper_Control_Limit, 
-             Lower_Control_Limit, 
-             Mean_Diameter, 
-             Parameter_Id 
-      FROM spc_data 
-      WHERE Parameter_Id IN (?)`;
-
-  // Execute the query with the array of parameterIds
-  db.query(query, [parameterIdArray])
-      .then(([data]) => {
-          // Group data by parameterId
-          const groupedData = data.reduce((acc, item) => {
-              if (!acc[item.Parameter_Id]) {
-                  acc[item.Parameter_Id] = [];
-              }
-              acc[item.Parameter_Id].push(item);
-              return acc;
-          }, {});
-
-          // Return the data grouped by parameterId
-          res.json(groupedData);
-      })
-      .catch((error) => {
-          console.error('Error fetching SPC data:', error);
-          res.status(500).json({ error: 'Failed to fetch data' });
-      });
+    SELECT Reading, \`Actual Diameter\`, \`Upper Control Limit\`, \`Lower Control Limit\`, \`Mean Diameter\`, Parameter_Id
+    FROM spc_data
+    WHERE Parameter_Id = ?
+  `;
+  db.query(query, [parameterId], (err, data) => {
+    if (err) {
+      console.error('Error fetching SPC data:', err);
+      return res.status(500).json({ error: 'Failed to fetch data' });
+    }
+    res.json(data);
+  });
 });
 
 
+
+
+
 app.get('/sales/parameters', (req, res) => {
-  const query = `SELECT DISTINCT Parameter_Id FROM SPC_Data;`;
+  const query = `SELECT  Parameter_Id, Parameter_Name FROM SPC_Parameter;`;
   db.query(query, (err, rows) => {
     if (err) {
       console.error('Error executing query:', err.message);
