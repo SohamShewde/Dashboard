@@ -4,18 +4,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const SIDEBAR_ITEMS = [
-	{
-		name: "Overview",
-		icon: BarChart2,
-		color: "#6366f1",
-		href: "/",
-	},
-	{ name: "Products", icon: ShoppingBag, color: "#8B5CF6", href: "/products" },
-	{ name: "Users", icon: Users, color: "#EC4899", href: "/users" },
+	// {
+	// 	name: "Overview",
+	// 	icon: BarChart2,
+	// 	color: "#6366f1",
+	// 	href: "/",
+	// },
+	// { name: "Products", icon: ShoppingBag, color: "#8B5CF6", href: "/products" },
+	// { name: "Users", icon: Users, color: "#EC4899", href: "/users" },
 	{ name: "Top Customers", icon: DollarSign, color: "#10B981", href: "/sales" },
-	{ name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
-	{ name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },
-	{ name: "Settings", icon: Settings, color: "#6EE7B7", href: "/settings" },
+	// { name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
+	// { name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },
+	// { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/settings" },
 ];
 
 const Sidebar = () => {
@@ -28,12 +28,12 @@ const Sidebar = () => {
 			}`}
 			animate={{ width: isSidebarOpen ? 256 : 80 }}
 		>
-			<div className='h-full bg-gray-800 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700'>
+			<div className='h-full bg-white bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-black'>
 				<motion.button
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}
 					onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-					className='p-2 rounded-full hover:bg-gray-700 transition-colors max-w-fit'
+					className='p-2 rounded-full hover:bg-black hover:text-white transition-colors max-w-fit'
 				>
 					<Menu size={24} />
 				</motion.button>
@@ -41,7 +41,8 @@ const Sidebar = () => {
 				<nav className='mt-8 flex-grow'>
 					{SIDEBAR_ITEMS.map((item) => (
 						<Link key={item.href} to={item.href}>
-							<motion.div className='flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors mb-2'>
+							<motion.div className='flex items-center p-4 text-sm font-medium rounded-lg hover:bg-black 
+							hover:text-white  transition-colors mb-2'>
 								<item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
 								<AnimatePresence>
 									{isSidebarOpen && (
