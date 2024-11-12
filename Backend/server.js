@@ -225,26 +225,49 @@ app.get('/sales/last-month', (req, res) => {
 //   });
 // });
 
-
-app.get('/sales/spc-data/:parameterId', (req, res) => {
-  const parameterId = req.params.parameterId;
-  if (!parameterId) {
-    return res.status(400).json({ error: 'Parameter ID is required.' });
-  }
-
+// Assuming `db` is your MySQL connection instance
+app.get('/sales/spc-data', (req, res) => {
   const query = `
-    SELECT Reading, \`Actual Diameter\`, \`Upper Control Limit\`, \`Lower Control Limit\`, \`Mean Diameter\`, Parameter_Id
-    FROM spc_data
-    WHERE Parameter_Id = ?
+    SELECT Parameter_Id, Reading, 
+           \`Actual Diameter\` AS Value, 
+           \`Upper Control Limit\` AS UpperControl,
+           \`Lower Control Limit\` AS LowerControl,
+           \`Mean Diameter\` AS Mean,
+           \`Lower MAX\` AS LowerMAX,
+           \`Upper MAX\`AS UpperMAX
+         
+    FROM SPC_Data
   `;
-  db.query(query, [parameterId], (err, data) => {
-    if (err) {
-      console.error('Error fetching SPC data:', err);
-      return res.status(500).json({ error: 'Failed to fetch data' });
+
+  db.query(query, (error, results) => {
+    if (error) {
+      res.status(500).send("Error fetching SPC data");
+      return;
     }
-    res.json(data);
+
+    // Group data by Parameter_Id
+    const groupedData = results.reduce((acc, row) => {
+      if (!acc[row.Parameter_Id]) {
+        acc[row.Parameter_Id] = [];
+      }
+      acc[row.Parameter_Id].push({
+        name: row.Reading,
+        Value: parseFloat(row.Value),
+        UpperControl: parseFloat(row.UpperControl),
+        LowerControl: parseFloat(row.LowerControl),
+        Mean: parseFloat(row.Mean),
+        LowerMAX: parseFloat(row.LowerMAX),
+        UpperMAX: parseFloat(row.UpperMAX),
+        // LowerLimit: parseFloat(row.LowerSpecLimit),
+        // UpperLimit: parseFloat(row.UpperSpecLimit)
+      });
+      return acc;
+    }, {});
+
+    res.json(groupedData);
   });
 });
+
 
 
 
