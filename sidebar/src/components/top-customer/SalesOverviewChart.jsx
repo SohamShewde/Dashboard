@@ -72,14 +72,14 @@ const SalesOverviewChart = () => {
         {Object.keys(spcData).map((parameterId) => (
           <motion.div
             key={parameterId}
-            className="p-6 border rounded-xl bg-gray-800 bg-opacity-50 shadow-lg cursor-pointer"
+            className="p-6 border rounded-xl bg-gray-900 opacity-95 shadow-lg cursor-pointer"
             onClick={() => setExpandedChart(expandedChart === parameterId ? null : parameterId)}
             style={{
               width: chartCount === 1 ? '100%' : 'auto',
               height: chartCount === 1 ? '500px' : 'auto'
             }}
           >
-            <h2 className="text-lg font-semibold text-center text-gray-300">Parameter {parameterId}</h2>
+            <h2 className="text-lg font-semibold text-center text-white">Parameter {parameterId}</h2>
             <DynamicChart parameterId={parameterId} isExpanded={expandedChart === parameterId} />
           </motion.div>
         ))}
@@ -99,7 +99,7 @@ const SalesOverviewChart = () => {
             >
               X
             </button>
-            <h2 className="text-2xl font-semibold text-center text-gray-300 mb-4">Parameter {expandedChart}</h2>
+            <h2 className="text-2xl font-semibold text-center text-gray-100 mb-4">Parameter {expandedChart}</h2>
             <DynamicChart parameterId={expandedChart} isExpanded={true} />
 
             {/* Legend */}
