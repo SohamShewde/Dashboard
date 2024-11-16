@@ -96,7 +96,7 @@ const SalesByCategoryChart = () => {
 	return (
 		<div>
 			<div className="flex space-x-4 items-center m-5 mb-11">
-				<label className="text-center font-extrabold text-gray-300">Select Time Range:</label>
+				<label className="text-center font-extrabold text-gray-100">Select Time Range:</label>
 				<select value={selectedTimeRange} onChange={(e) => setSelectedTimeRange(e.target.value)} className="bg-gray-700 text-white border px-2 py-1 rounded-md focus:outline-none focus:ring-2">
 					<option value="This Week">This Week</option>
 					<option value="Last Week">Last Week</option>
@@ -116,7 +116,7 @@ const SalesByCategoryChart = () => {
 							startDate={startDate}
 							endDate={endDate}
 							placeholderText="Start Date"
-							className="bg-gray-700 text-white border px-2 py-1 rounded-md focus:outline-none focus:ring-2"
+							className="bg-gray-100 text-gray-700 border px-2 py-1 rounded-md focus:outline-none focus:ring-2"
 						/>
 						<DatePicker
 							selected={endDate}
@@ -126,7 +126,7 @@ const SalesByCategoryChart = () => {
 							endDate={endDate}
 							minDate={startDate}
 							placeholderText="End Date"
-							className="bg-gray-700 text-white border px-2 py-1 rounded-md focus:outline-none focus:ring-2"
+							className="bg-gray-100 text-gray-700 border px-2 py-1 rounded-md focus:outline-none focus:ring-2"
 						/>
 					</div>
 				)}
@@ -143,25 +143,25 @@ const SalesByCategoryChart = () => {
 				{Array.from({ length: MAX_CHARTS }).map((_, index) => (
 					<motion.div
 						key={index}
-						className="p-6 border rounded-xl bg-gray-800 bg-opacity-50 shadow-lg cursor-pointer"
+						className="p-6 border rounded-xl bg-gray-700 bg-opacity-50 shadow-lg cursor-pointer"
 						onClick={() => setExpandedChart(index)}
 					>
-						<h2 className="text-lg font-semibold text-center text-gray-300">Chart {index + 1}</h2>
+						<h2 className="text-lg font-semibold text-center bg-gray-700 text-gray-300">Chart {index + 1}</h2>
 						<ChartComponent data={salesData} type={chartType} />
 					</motion.div>
 				))}
 			</div>
 
 			{expandedChart !== null && (
-				<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
-					<div className="bg-gray-800 p-10 rounded-lg shadow-lg w-3/4 h-3/4">
+				<div className="fixed inset-0 flex items-center justify-center bg-white text-gray-700 bg-opacity-75">
+					<div className="bg-gray-100 text-gray-100 p-10 rounded-lg shadow-lg w-3/4 h-3/4">
 						<button
 							onClick={() => setExpandedChart(null)}
 							className="text-white text-lg absolute top-4 right-4 font-bold"
 						>
 							X
 						</button>
-						<h2 className="text-2xl font-semibold text-center text-gray-200 mb-11">Chart {expandedChart + 1}</h2>
+						<h2 className="text-2xl font-semibold text-center bg-gray-100 text-gray-700 mb-11">Chart {expandedChart + 1}</h2>
 						<ChartComponent data={salesData} type={chartType} />
 					</div>
 				</div>
