@@ -53,11 +53,11 @@ const SalesOverviewChart = () => {
             ticks={yAxisValues}
           />
           <Tooltip contentStyle={{ backgroundColor: "rgba(31, 41, 55, 0.8)" }} />
-          <ReferenceArea y1={yAxisValues[0]} y2={yAxisValues[1]} fill="#FF0000" opacity={0.7} />
-          <ReferenceArea y1={yAxisValues[1]} y2={yAxisValues[2]} fill="#FCE205" opacity={0.7} />
-          <ReferenceArea y1={yAxisValues[2]} y2={yAxisValues[yAxisValues.length - 3]} fill="#00FF00" opacity={0.7} />
-          <ReferenceArea y1={yAxisValues[4]} y2={yAxisValues[5]} fill="#FCE205" opacity={0.7} />
-          <ReferenceArea y1={yAxisValues[5]} y2={yAxisValues[6]} fill="#FF0000" opacity={0.7} />
+          <ReferenceArea y1={yAxisValues[0]} y2={yAxisValues[1]} fill="#FF0000" fillOpacity={1} />
+          <ReferenceArea y1={yAxisValues[1]} y2={yAxisValues[2]} fill="#FCE205" fillOpacity={1} />
+          <ReferenceArea y1={yAxisValues[2]} y2={yAxisValues[yAxisValues.length - 3]} fill="#00FF00" fillOpacity={1} />
+          <ReferenceArea y1={yAxisValues[4]} y2={yAxisValues[5]} fill="#FCE205" fillOpacity={1} />
+          <ReferenceArea y1={yAxisValues[5]} y2={yAxisValues[6]} fill="#FF0000" fillOpacity={1} />
           <ReferenceLine y={`${meanValue.toFixed(2)}`} stroke="blue" />
           <Line
             type="monotone"
@@ -108,17 +108,17 @@ const SalesOverviewChart = () => {
     {renderCharts()}
     {expandedChart !== null && (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
-        <div className="bg-gray-800 p-10 rounded-lg shadow-lg w-full h-full relative overflow-auto">
+        <div className="bg-white p-10  shadow-lg w-full h-full relative overflow-auto">
           {/* Close Button */}
           <button
             onClick={() => setExpandedChart(null)}
-            className="text-white text-lg absolute top-4 right-4 font-bold"
+            className="text-black text-lg absolute top-4 right-4 font-bold"
           >
             X
           </button>
   
           {/* Chart Header */}
-          <h2 className="text-2xl font-semibold text-center text-gray-100 mb-4">
+          <h2 className="text-2xl font-semibold text-center text-gray-900 mb-4">
             Parameter {expandedChart}
           </h2>
   
@@ -126,7 +126,7 @@ const SalesOverviewChart = () => {
           <DynamicChart parameterId={expandedChart} isExpanded={true} />
   
           {/* Legend Section */}
-          <div className="mt-6 flex flex-wrap justify-center space-x-6 text-sm text-gray-300">
+          <div className="mt-6 flex flex-wrap justify-center space-x-6 text-sm text-gray-900">
             {/* Actual Dia - Line with Circle Markers */}
             <span className="flex items-center mb-2">
               <span
@@ -148,7 +148,7 @@ const SalesOverviewChart = () => {
   
             {/* Other Legend Items */}
             <span className="flex items-center mb-2">
-              <span className="inline-block w-4 h-4 mr-2 bg-red-500"></span>
+              <span className="inline-block w-4 h-4 mr-2 bg-red-500 "></span>
               UMAX
             </span>
             <span className="flex items-center mb-2">
